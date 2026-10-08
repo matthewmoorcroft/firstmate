@@ -1,0 +1,52 @@
+=== fm-pr-check.sh refuses malformed underscore owners (LC_ALL=en_US.UTF-8) ===
+OWNER                                        EXIT  GHCALL STDERR
+_owner                                       2     0      error: invalid PR check request
+owner_                                       2     0      error: invalid PR check request
+_                                            2     0      error: invalid PR check request
+owner__data                                  2     0      error: invalid PR check request
+owner_data_x                                 2     0      error: invalid PR check request
+owner-_data                                  2     0      error: invalid PR check request
+owner_-data                                  2     0      error: invalid PR check request
+owner_da-ta                                  2     0      error: invalid PR check request
+-owner_data                                  2     0      error: invalid PR check request
+owner--x_data                                2     0      error: invalid PR check request
+a_b                                          2     0      error: invalid PR check request
+ab_1                                         2     0      error: invalid PR check request
+owner_ab                                     2     0      error: invalid PR check request
+owner_abcdefghi                              2     0      error: invalid PR check request
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa_data     2     0      error: invalid PR check request
+ownér_data                                  2     0      error: invalid PR check request
+owner_dätä                                 2     0      error: invalid PR check request
+owner_da%5Fta                                2     0      error: invalid PR check request
+owner_data/../x                              2     0      error: invalid PR check request
+task-b.meta unchanged after all refusals
+no poll armed for task-b
+
+=== fm-pr-merge.sh refuses malformed underscore owners ===
+owner__data                                  2     0      error: invalid PR merge request
+a_b                                          2     0      error: invalid PR merge request
+owner_abcdefghi                              2     0      error: invalid PR merge request
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa_data     2     0      error: invalid PR merge request
+
+=== armed static poll (byte-identical bin/fm-pr-poll.sh) revalidates a doctored sidecar ===
+(accepted owners reach real gh, which 404s for these placeholder repos and the poll stays silent;
+ refused owners exit before any gh call)
+OWNER                                        EXPECT    GHCALL STDOUT
+a_abc                                        accept    1      <silent>
+a-b_ABCD1234                                 accept    1      <silent>
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa_data      accept    1      <silent>
+matthew-moorcroft_data                       accept    1      merged
+owner_                                       refuse    0      <silent>
+owner__data                                  refuse    0      <silent>
+owner_data_x                                 refuse    0      <silent>
+owner-_data                                  refuse    0      <silent>
+owner_-data                                  refuse    0      <silent>
+owner_da-ta                                  refuse    0      <silent>
+a_b                                          refuse    0      <silent>
+ab_1                                         refuse    0      <silent>
+owner_ab                                     refuse    0      <silent>
+owner_abcdefghi                              refuse    0      <silent>
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa_data     refuse    0      <silent>
+ownér_data                                  refuse    0      <silent>
+
+adversarial mismatches: 0

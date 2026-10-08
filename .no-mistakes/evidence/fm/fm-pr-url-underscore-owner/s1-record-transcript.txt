@@ -1,0 +1,47 @@
+=== BASE commit 19fcbbd (before the fix): fm-pr-check.sh on the EMU URL ===
+
+$ bin/fm-pr-check.sh task-a https://github.com/matthew-moorcroft_data/personal_management/pull/9   # base scripts
+error: invalid PR check request
+exit=2
+gh calls made by base: 0
+meta pr= after base: 0
+
+=== TARGET commit 807866a (the fix): fm-pr-check.sh on the EMU URL ===
+
+$ bin/fm-pr-check.sh task-a https://github.com/matthew-moorcroft_data/personal_management/pull/9
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+●  WATCHER DOWN - SUPERVISION IS OFF
+●  1 task(s) in flight, but no watcher has a fresh beacon (last beat: never, grace 300s).
+●  Trust the emitted supervision protocol for this harness; do not use shell & for watcher repair.
+●  This is a supervision warning only; the guarded operation WILL still run.
+●  watcher supervision needs Stop-owned automatic recovery; inspect the hook registration and startup status before ending the turn.
+●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+armed: state/task-a.check.sh
+exit=0
+
+--- real gh calls (via read-only guard) ---
+pr view https://github.com/matthew-moorcroft_data/personal_management/pull/9 --json isDraft
+pr view https://github.com/matthew-moorcroft_data/personal_management/pull/9 --json headRefOid -q .headRefOid
+--- state/task-a.meta ---
+window=fm-lab:fm-task-a
+endpoint_task_id=task-a
+worktree=/var/folders/xc/kv262_q96vngp00tb1549f6w0000gp/T//fm-lab.90L7q4/wt
+project=/var/folders/xc/kv262_q96vngp00tb1549f6w0000gp/T//fm-lab.90L7q4/projects/personal_management
+kind=ship
+mode=no-mistakes
+pr=https://github.com/matthew-moorcroft_data/personal_management/pull/9
+pr_head=169e2bdeab4f0c880c06d6020a5aee60834a163d
+--- state/task-a.pr-poll (sidecar) ---
+github
+https://github.com/matthew-moorcroft_data/personal_management/pull/9
+github.com
+matthew-moorcroft_data/personal_management
+9
+--- armed check is byte-identical to bin/fm-pr-poll.sh? ---
+yes: cmp identical
+-rw-------@ 1 matthew.moorcroft  staff    84 Oct  8 23:24 contributions.check-trust
+-rwx------@ 1 matthew.moorcroft  staff   409 Oct  8 23:24 contributions.check.sh
+-rw-------@ 1 matthew.moorcroft  staff  7565 Oct  8 23:24 task-a.check.sh
+-rw-------@ 1 matthew.moorcroft  staff   373 Oct  8 23:24 task-a.meta
+-rw-------@ 1 matthew.moorcroft  staff   132 Oct  8 23:24 task-a.pr-poll
+-rw-------@ 1 matthew.moorcroft  staff   332 Oct  8 23:24 task-a.pr-poll-registration

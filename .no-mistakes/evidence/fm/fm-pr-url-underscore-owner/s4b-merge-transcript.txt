@@ -1,0 +1,31 @@
+=== BASE 19fcbbd: guarded merge of the approved EMU PR ===
+
+$ bin/fm-pr-merge.sh task-c https://github.com/matthew-moorcroft_data/personal_management/pull/13 -- --merge   # base scripts
+error: invalid PR merge request
+exit=2
+gh calls made by base: 0
+
+=== TARGET 807866a: guarded merge of the same EMU PR ===
+
+$ bin/fm-pr-merge.sh task-c https://github.com/matthew-moorcroft_data/personal_management/pull/13 -- --merge
+armed: state/task-c.check.sh
+error: refusing to merge https://github.com/matthew-moorcroft_data/personal_management/pull/13
+  - state is "MERGED", not open
+  - mergeable is "UNKNOWN", not MERGEABLE
+exit=1
+--- real gh calls (via read-only guard) ---
+pr view https://github.com/matthew-moorcroft_data/personal_management/pull/13 --json headRefOid -q .headRefOid
+pr view https://github.com/matthew-moorcroft_data/personal_management/pull/13 --json state,isDraft,mergeable,mergeStateStatus,headRefOid,baseRefName,statusCheckRollup
+api repos/matthew-moorcroft_data/personal_management/branches/main
+api --paginate repos/matthew-moorcroft_data/personal_management/rules/branches/main
+--- any merge attempted or refused by the guard? ---
+none: no gh pr merge was issued
+--- state/task-c.meta ---
+window=fm-lab:fm-task-c
+endpoint_task_id=task-c
+worktree=/var/folders/xc/kv262_q96vngp00tb1549f6w0000gp/T//fm-lab.eai2wU/wt
+project=/var/folders/xc/kv262_q96vngp00tb1549f6w0000gp/T//fm-lab.eai2wU/projects/personal_management
+kind=ship
+mode=no-mistakes
+pr=https://github.com/matthew-moorcroft_data/personal_management/pull/13
+pr_head=4f3e2d3b853fbf1b419ae9742d6e7ce3348299e7

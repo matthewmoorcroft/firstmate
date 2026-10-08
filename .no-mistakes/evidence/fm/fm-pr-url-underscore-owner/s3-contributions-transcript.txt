@@ -1,0 +1,63 @@
+=== durable record the real contribution poll wrote: data/task-a/contributions.json ===
+{
+  "schema": "fm-contributions.v1",
+  "task": "task-a",
+  "records": [
+    {
+      "url": "https://github.com/matthew-moorcroft_data/personal_management/pull/9",
+      "kind": "pr",
+      "checked_at": "2026-10-08T22:24:47Z",
+      "error": null,
+      "observation": {
+        "state": "merged",
+        "head": "169e2bdeab4f0c880c06d6020a5aee60834a163d",
+        "draft": false,
+        "review_decision": "",
+        "checks": 0
+      }
+    }
+  ]
+}
+
+$ bin/fm-fleet-snapshot.sh --contribution-input > input.json
+exit=0
+{"backlog_present":true,"tasks":[{"id":"task-a","pr":"https://github.com/matthew-moorcroft_data/personal_management/pull/9"}]}
+
+=== TARGET: fm-contributions.sh snapshot (fixed canonical_url) ===
+
+$ bin/fm-contributions.sh snapshot input.json --all
+{
+  "known": 1,
+  "checked": 1,
+  "complete": true,
+  "counts": {
+    "captain": 0,
+    "fleet": 0,
+    "maintainer": 0,
+    "nobody": 1
+  },
+  "rows": [
+    {
+      "task": "task-a",
+      "url": "https://github.com/matthew-moorcroft_data/personal_management/pull/9",
+      "state": null,
+      "actor": "nobody"
+    }
+  ]
+}
+
+=== BASE 19fcbbd: same read-only snapshot over the same saved record ===
+
+$ base bin/fm-contributions.sh snapshot input.json --all
+{
+  "known": 0,
+  "checked": 0,
+  "complete": false,
+  "counts": {
+    "captain": 0,
+    "fleet": 0,
+    "maintainer": 0,
+    "nobody": 0
+  },
+  "rows": []
+}

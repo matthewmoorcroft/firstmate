@@ -1,0 +1,26 @@
+=== armed poll run directly, the way the watcher runs a check ===
+
+$ bash state/task-a.check.sh
+stdout=[merged] exit=0
+--- real gh calls ---
+pr view https://github.com/matthew-moorcroft_data/personal_management/pull/9 --json state -q .state
+
+=== real watcher (bin/fm-watch.sh) in the lab home, bounded to 120s ===
+
+$ FM_CHECK_INTERVAL=0 FM_POLL=0.5 bin/fm-watch.sh
+watcher exit=0
+--- watcher stdout ---
+check: /var/folders/xc/kv262_q96vngp00tb1549f6w0000gp/T//fm-lab.90L7q4/state/task-a.check.sh: merged
+--- watcher stderr (tail) ---
+--- real gh calls made by watcher checks ---
+api repos/matthew-moorcroft_data/personal_management/pulls/9
+api repos/matthew-moorcroft_data/personal_management/issues/9/comments?per_page=100 --paginate --slurp
+api repos/matthew-moorcroft_data/personal_management/pulls/9/reviews?per_page=100 --paginate --slurp
+api repos/matthew-moorcroft_data/personal_management/commits/169e2bdeab4f0c880c06d6020a5aee60834a163d/check-runs?filter=all&per_page=100 --paginate --slurp
+api repos/matthew-moorcroft_data/personal_management/commits/169e2bdeab4f0c880c06d6020a5aee60834a163d/statuses?per_page=100 --paginate --slurp
+api repos/matthew-moorcroft_data/personal_management
+api repos/matthew-moorcroft_data/personal_management/pulls/9/comments?per_page=100 --paginate --slurp
+pr view https://github.com/matthew-moorcroft_data/personal_management/pull/9 --json headRefOid,reviewDecision
+pr view https://github.com/matthew-moorcroft_data/personal_management/pull/9 --json state -q .state
+--- state/.wake-queue ---
+1791498291	1	check	merged-task-a-https://github.com/matthew-moorcroft_data/personal_management/pull/9	check: merge landed: task-a https://github.com/matthew-moorcroft_data/personal_management/pull/9 external

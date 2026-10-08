@@ -1,0 +1,28 @@
+=== BASE 19fcbbd: guarded merge of the approved EMU PR ===
+
+$ bin/fm-pr-merge.sh task-c https://github.com/matthew-moorcroft_data/personal_management/pull/13 -- --merge   # base scripts
+error: invalid PR merge request
+exit=2
+gh calls made by base: 0
+
+=== TARGET 807866a: guarded merge of the same EMU PR ===
+
+$ bin/fm-pr-merge.sh task-c https://github.com/matthew-moorcroft_data/personal_management/pull/13 -- --merge
+WARNING: queued wakes pending - drain them with bin/fm-wake-drain.sh before anything else.
+armed: state/task-c.check.sh
+fm-captain-hold: compatible tasks-axi is required
+error: could not determine whether task task-c is still held for the captain; refusing to merge
+exit=1
+--- real gh calls (via read-only guard) ---
+pr view https://github.com/matthew-moorcroft_data/personal_management/pull/13 --json headRefOid -q .headRefOid
+--- any merge attempted or refused by the guard? ---
+none: no gh pr merge was issued
+--- state/task-c.meta after merge preflight ---
+window=fm-lab:fm-task-c
+endpoint_task_id=task-c
+worktree=/var/folders/xc/kv262_q96vngp00tb1549f6w0000gp/T//fm-lab.90L7q4/wt
+project=/var/folders/xc/kv262_q96vngp00tb1549f6w0000gp/T//fm-lab.90L7q4/projects/personal_management
+kind=ship
+mode=no-mistakes
+pr=https://github.com/matthew-moorcroft_data/personal_management/pull/13
+pr_head=4f3e2d3b853fbf1b419ae9742d6e7ce3348299e7
